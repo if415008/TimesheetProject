@@ -26,7 +26,7 @@ const MainTab = createMaterialTopTabNavigator({
   ProfileTab: {
     screen: profileScreen,
     navigationOptions: (props) => ({
-      title: "ABOUT"
+      title: "TIMESHEET"
     })
   },
 }, 
