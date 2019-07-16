@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, View, StyleSheet, TextInput, Image, TouchableOpacity,Button, FormInput, ScrollView, Label  } from 'react-native'
 import DialogInput from 'react-native-dialog-input';
 import Dialog from "react-native-dialog";
-import moment from 'moment';
+import Moment from 'moment';
 
 export default class profile extends Component {
   constructor(props) {
@@ -10,11 +10,10 @@ export default class profile extends Component {
     this.state = {
       //defauilt value of the date time
       date: '',
-      currentTime: 0
+      currentTime: 0,
+      isStarted: false
     };
   }
-
-  
 
   state = {
     isModalVisible: false
@@ -43,6 +42,19 @@ export default class profile extends Component {
         date + '/' + month + '/' + year,
     });
   }
+
+  btnPlay(){
+    if(this.state.isStarted){
+      return (
+        <Image style={{width: 45, height:45}} source={require("../assets/images/stop.png")}/>
+      )
+    } else {
+      return (
+        <Image style={{width: 45, height:45, tintColor:"#FFF"}} source={require("../assets/images/play.png")}/>
+      )
+    }
+  }
+
   render() {
     return (
       <ScrollView>
@@ -63,12 +75,13 @@ export default class profile extends Component {
                   <Text style={{marginLeft: 10, borderRadius: 1,borderWidth:1, height :30}}>Membuat Timesheet</Text>
                 </View>
                 <TouchableOpacity style={{marginHorizontal:20}} onPress={() => {
-                  this.props.navigation.navigate("Play", {
-                    data: this.state.data[index]
+                  this.setState({
+                    isStarted : !this.state.isStarted
                   })
+                  alert(Moment().format("hh:mm:ss"))
                   }}>
                   <View style={{backgroundColor:"#006183", padding:3, justifyContent:"center", alignItems:"center", width:30, height:30, borderRadius: 15}}>
-                    <Image style={{width: 45, height:45, tintColor:"#FFF"}} source={require("../assets/images/play.png")}/>
+                    {this.btnPlay()}
                   </View>
                 </TouchableOpacity>
               </View>
@@ -128,13 +141,13 @@ export default class profile extends Component {
                 {/* Pop Up Add*/}
                 <Dialog.Container visible={this.state.isModal}>
                     <Dialog.Title>Add Task</Dialog.Title>
-                    <Dialog.Input label="Task" style={{borderWidth:1}} onChangeText={(email) => this.handleEmail(email)}
+                    <Dialog.Input label="Task" style={{borderWidth:1}} onChangeText={(task) => this.handleTask(task)}
                     ></Dialog.Input>
-                    <Dialog.Input label="Start" style={{borderWidth:1}} onChangeText={(email) => this.handleEmail(email)}
+                    <Dialog.Input label="Start" style={{borderWidth:1}} onChangeText={(start) => this.handleStart(start)}
                     ></Dialog.Input>
-                    <Dialog.Input label="End" style={{borderWidth:1}} onChangeText={(email) => this.handleEmail(email)}
+                    <Dialog.Input label="End" style={{borderWidth:1}} onChangeText={(end) => this.handleEnd(end)}
                     ></Dialog.Input>
-                    <Dialog.Input label="Total" style={{borderWidth:1}} onChangeText={(email) => this.handleEmail(email)}
+                    <Dialog.Input label="Total" style={{borderWidth:1}} onChangeText={(total) => this.handleTotal(total)}
                     ></Dialog.Input>
                     <Dialog.Button label="Save" onPress={this.toggleModal} />
                 </Dialog.Container>
@@ -148,13 +161,13 @@ export default class profile extends Component {
                 <View>
                 <Dialog.Container visible={this.state.isModalVisible}>
                     <Dialog.Title>Edit Task</Dialog.Title>
-                    <Dialog.Input label="Task" style={{borderWidth:1}} onChangeText={(email) => this.handleEmail(email)}
+                    <Dialog.Input label="Task" style={{borderWidth:1}} onChangeText={(task) => this.handleTask(task)}
                     ></Dialog.Input>
-                    <Dialog.Input label="Start" style={{borderWidth:1}} onChangeText={(email) => this.handleEmail(email)}
+                    <Dialog.Input label="Start" style={{borderWidth:1}} onChangeText={(start) => this.handleStart(start)}
                     ></Dialog.Input>
-                    <Dialog.Input label="End" style={{borderWidth:1}} onChangeText={(email) => this.handleEmail(email)}
+                    <Dialog.Input label="End" style={{borderWidth:1}} onChangeText={(end) => this.handleEnd(end)}
                     ></Dialog.Input>
-                    <Dialog.Input label="Total" style={{borderWidth:1}} onChangeText={(email) => this.handleEmail(email)}
+                    <Dialog.Input label="Total" style={{borderWidth:1}} onChangeText={(total) => this.handleTotal(total)}
                     ></Dialog.Input>
                     <Dialog.Button label="Save" onPress={this._toggleModal} />
                 </Dialog.Container>
@@ -207,13 +220,13 @@ export default class profile extends Component {
                 {/* Pop Up Add */}
                 <Dialog.Container visible={this.state.isModalVisible}>
                     <Dialog.Title>Add Task</Dialog.Title>
-                    <Dialog.Input label="Task" style={{borderWidth:1}} onChangeText={(email) => this.handleEmail(email)}
+                    <Dialog.Input label="Task" style={{borderWidth:1}} onChangeText={(task) => this.handleTask(task)}
                     ></Dialog.Input>
-                    <Dialog.Input label="Start" style={{borderWidth:1}} onChangeText={(email) => this.handleEmail(email)}
+                    <Dialog.Input label="Start" style={{borderWidth:1}} onChangeText={(start) => this.handleStart(start)}
                     ></Dialog.Input>
-                    <Dialog.Input label="End" style={{borderWidth:1}} onChangeText={(email) => this.handleEmail(email)}
+                    <Dialog.Input label="End" style={{borderWidth:1}} onChangeText={(end) => this.handleEnd(end)}
                     ></Dialog.Input>
-                    <Dialog.Input label="Total" style={{borderWidth:1}} onChangeText={(email) => this.handleEmail(email)}
+                    <Dialog.Input label="Total" style={{borderWidth:1}} onChangeText={(total) => this.handleTotal(total)}
                     ></Dialog.Input>
                     <Dialog.Button label="Save" onPress={this._toggleModal} />
                 </Dialog.Container>
@@ -224,13 +237,13 @@ export default class profile extends Component {
                 </TouchableOpacity>
                 <Dialog.Container visible={this.state.isModalVisible}>
                     <Dialog.Title>Edit Task</Dialog.Title>
-                    <Dialog.Input label="Task" style={{borderWidth:1}} onChangeText={(email) => this.handleEmail(email)}
+                    <Dialog.Input label="Task" style={{borderWidth:1}} onChangeText={(task) => this.handleTask(task)}
                     ></Dialog.Input>
-                    <Dialog.Input label="Start" style={{borderWidth:1}} onChangeText={(email) => this.handleEmail(email)}
+                    <Dialog.Input label="Start" style={{borderWidth:1}} onChangeText={(start) => this.handleStart(start)}
                     ></Dialog.Input>
-                    <Dialog.Input label="End" style={{borderWidth:1}} onChangeText={(email) => this.handleEmail(email)}
+                    <Dialog.Input label="End" style={{borderWidth:1}} onChangeText={(end) => this.handleEnd(end)}
                     ></Dialog.Input>
-                    <Dialog.Input label="Total" style={{borderWidth:1}} onChangeText={(email) => this.handleEmail(email)}
+                    <Dialog.Input label="Total" style={{borderWidth:1}} onChangeText={(total) => this.handleTotal(total)}
                     ></Dialog.Input>
                     <Dialog.Button label="Save" onPress={this._toggleModal} />
                 </Dialog.Container>
